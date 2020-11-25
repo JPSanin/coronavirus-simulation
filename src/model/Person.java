@@ -3,19 +3,21 @@ package model;
 import processing.core.PApplet;
 import processing.core.PVector;
 
-public abstract class Person{
+public abstract class Person extends Thread{
 	
 	
 	private final static int SIZE=7;
 	private PVector location;
 	private PVector velocity;
 	private PApplet app;
+	private boolean chocar;
 	
 	
 	public Person(PApplet app) {
 		location= 	new PVector (app.random(29, 371),app.random(54, 271));
 		velocity=	new PVector (app.random(-2, 2),app.random(-2, 2));
 		this.app=app;
+		chocar=false;
 	}
 	
 	
@@ -31,11 +33,27 @@ public abstract class Person{
 		if((location.y>275-SIZE) || (location.y<50+SIZE)) {
 			velocity.y = velocity.y * -1;
 		}
+		
+		if(chocar) {
+			velocity.x = velocity.x * -1;
+			velocity.y = velocity.y * -1;
+			chocar=false;
+		}
 	}
 	
 	public abstract void draw();
 
-
+	
+	public void run() {
+		move();
+		bounce();
+		try {
+			sleep(14000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public static int getSize() {
 		return SIZE;
 	}
@@ -48,6 +66,16 @@ public abstract class Person{
 
 	public PVector getVelocity() {
 		return velocity;
+	}
+
+
+	public boolean isChocar() {
+		return chocar;
+	}
+
+
+	public void setChocar(boolean chocar) {
+		this.chocar = chocar;
 	}
 
 

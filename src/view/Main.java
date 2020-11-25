@@ -32,9 +32,9 @@ public class Main extends PApplet{
 		stroke(0);
 		rect(25, 50, 350, 225);
 		for (int i = 0; i < ps.length; i++) {
-			ps[i].move();
-			ps[i].bounce();
 			ps[i].draw();
+			new Thread(ps[i]).start();
+	
 		}
 		
 	}
