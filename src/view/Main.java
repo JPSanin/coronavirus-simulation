@@ -75,6 +75,8 @@ public class Main extends PApplet{
 		
 		controller.collisions();
 		
+		
+		
 		try {
 			controller.hitCheckInfection();
 		} catch (InfectedException e) {

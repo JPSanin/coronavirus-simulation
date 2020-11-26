@@ -7,7 +7,7 @@ import exceptions.InfectedException;
 import exceptions.ThirtyPercentException;
 import processing.core.PApplet;
 
-public class Logic {
+public class Logic{
 
 	private ArrayList<Healthy> healthyPeople;
 	private ArrayList<Infected> infectedPeople;
@@ -50,6 +50,7 @@ public class Logic {
 	}
 
 
+
 	public void sortIndicatorsAmount() {
 		Arrays.sort(indicators);
 	}
@@ -58,7 +59,9 @@ public class Logic {
 		Arrays.sort(indicators,cc);
 	}
 	
-	public void hitCheckInfection() throws InfectedException{
+	
+	
+	public boolean hitCheckInfection() throws InfectedException{
 		
 		boolean hit=false;
 		for (int i = 0; i < healthyPeople.size() && hit==false; i++) {
@@ -82,6 +85,8 @@ public class Logic {
 				}
 			}
 		}
+		
+		return hit;
 		
 		
 	}
