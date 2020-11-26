@@ -23,6 +23,26 @@ public class Controller {
 	public void hitcheck() {
 		logic.hitcheck();
 	}
+
+	
+	public int getHealthySize() {
+		return logic.getHealthyPeople().size();
+	}
+
+	public int getInfectedSize() {
+		return logic.getInfectedPeople().size();
+	}
+	
+	public int getRecoveredSize() {
+		return logic.getRecoveredPeople().size();
+	}
+	
+	public Logic getLogic() {
+		return logic;
+	}
+
+
+	
 	
 	
 	

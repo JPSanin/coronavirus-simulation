@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import processing.core.PApplet;
 
@@ -12,6 +13,7 @@ public class Logic {
 
 	private Indicator[] indicators;
 
+	private ColorComparator cc;
 
 	public Logic(int healthyStart, int infectedStart, int recoveredStart, PApplet app ) {
 		healthyPeople= new ArrayList<>();
@@ -34,21 +36,45 @@ public class Logic {
 		indicators[0]= new Indicator(healthyStart, 1, app);
 		indicators[1]= new Indicator(infectedStart, 2, app);
 		indicators[2]= new Indicator(recoveredStart, 3, app);
+		
+		cc= new ColorComparator();
 
 	}
 
 
 	public void sortIndicatorsAmount() {
-
+		Arrays.sort(indicators);
 	}
 
 	public void sortIndicatorsColor() {
-
+		Arrays.sort(indicators,cc);
 	}
 	
 	public void hitcheck() {
 		
 	}
+
+
+	public ArrayList<Healthy> getHealthyPeople() {
+		return healthyPeople;
+	}
+
+
+	public ArrayList<Infected> getInfectedPeople() {
+		return infectedPeople;
+	}
+
+
+	public ArrayList<Recovered> getRecoveredPeople() {
+		return recoveredPeople;
+	}
+
+
+	public Indicator[] getIndicators() {
+		return indicators;
+	}
+	
+	
 	
 	
 

@@ -14,7 +14,7 @@ public abstract class Person extends Thread{
 	
 	
 	public Person(PApplet app) {
-		location= 	new PVector (app.random(29, 371),app.random(54, 271));
+		location= 	new PVector (app.random(35, 765),app.random(60, 565));
 		velocity=	new PVector (app.random(-2, 2),app.random(-2, 2));
 		this.app=app;
 		chocar=false;
@@ -26,11 +26,11 @@ public abstract class Person extends Thread{
 	}
 	
 	public void bounce() {
-		if((location.x>375-SIZE) || (location.x<25+SIZE)) {
+		if((location.x>775-SIZE) || (location.x<25+SIZE)) {
 			velocity.x = velocity.x * -1;
 		}
 		
-		if((location.y>275-SIZE) || (location.y<50+SIZE)) {
+		if((location.y>575-SIZE) || (location.y<50+SIZE)) {
 			velocity.y = velocity.y * -1;
 		}
 		
@@ -48,7 +48,7 @@ public abstract class Person extends Thread{
 		move();
 		bounce();
 		try {
-			sleep(14000);
+			sleep(500);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
