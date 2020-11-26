@@ -2,17 +2,12 @@ package view;
 
 import controller.Controller;
 import exceptions.InfectedException;
-/*
-import model.Healthy;
-import model.Infected;
-import model.Person;
-import model.Recovered;*/
+import exceptions.ThirtyPercentException;
 import processing.core.PApplet;
 import processing.core.PConstants;
 
 public class Main extends PApplet{
 
-	//private Person[] ps= new Person[3];
 	private Controller controller;
 
 	public static void main(String[] args) {
@@ -36,9 +31,7 @@ public class Main extends PApplet{
 
 
 		controller= new Controller(healthyStart, infectedStart, recoveredStart, this);
-		/*ps[0]=new Healthy(this);
-		ps[1]=new Infected(this);
-		ps[2]= new Recovered(this);*/
+	
 	}
 
 	public void draw() {
@@ -47,11 +40,7 @@ public class Main extends PApplet{
 		fill(255);
 		stroke(0);
 		rect(25, 50, 750, 525);
-		/*for (int i = 0; i < ps.length; i++) {
-			ps[i].draw();
-			new Thread(ps[i]).start();
-
-		}*/
+	
 
 		for(int i=0; i<controller.getHealthySize();i++) {
 			controller.getLogic().getHealthyPeople().get(i).draw();
@@ -72,6 +61,14 @@ public class Main extends PApplet{
 		for(int i=0; i< controller.getLogic().getIndicators().length;i++) {
 			controller.getLogic().getIndicators()[i].draw(450+(i*100));
 		}
+		
+		
+		try {
+			controller.checkPercentage();
+		} catch (ThirtyPercentException e1) {
+			System.out.println(e1.getMessage());
+		}
+		controller.collisions();
 		
 		try {
 			controller.hitCheckInfection();

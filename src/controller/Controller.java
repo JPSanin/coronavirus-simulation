@@ -1,6 +1,7 @@
 package controller;
 
 import exceptions.InfectedException;
+import exceptions.ThirtyPercentException;
 import model.Logic;
 import processing.core.PApplet;
 
@@ -24,7 +25,14 @@ public class Controller {
 	public void hitCheckInfection() throws InfectedException  {
 		logic.hitCheckInfection();
 	}
+	
+	public void collisions() {
+		logic.collisions();
+	}
 
+	public void checkPercentage() throws ThirtyPercentException {
+		logic.checkPercentage();
+	}
 	
 	public int getHealthySize() {
 		return logic.getHealthyPeople().size();

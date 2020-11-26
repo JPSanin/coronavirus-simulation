@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import exceptions.InfectedException;
+import exceptions.ThirtyPercentException;
 import processing.core.PApplet;
 
 public class Logic {
@@ -62,24 +63,95 @@ public class Logic {
 		boolean hit=false;
 		for (int i = 0; i < healthyPeople.size() && hit==false; i++) {
 			for (int j = 0; j < infectedPeople.size() && hit==false ; j++) {
-				healthyPeople.get(i).checkCollision(infectedPeople.get(j));
+				healthyPeople.get(i).checkCollision(infectedPeople.get(j),1);
 				if(healthyPeople.get(i).isHit()) {
-					Infected newInfected= new Infected(healthyPeople.get(i).getLocation(),
-							healthyPeople.get(i).getVelocity(),app);
-					healthyPeople.remove(i);
-					infectedPeople.add(newInfected);
-					hit=true;
-					throw new InfectedException();
+					int random= (int) app.random(11);
+					if(random<=9) {
+						Infected newInfected= new Infected(healthyPeople.get(i).getLocation(),
+								healthyPeople.get(i).getVelocity(),app);
+						healthyPeople.remove(i);
+						infectedPeople.add(newInfected);
+						hit=true;
+						indicators[0].setAmount(indicators[0].getAmount()-1);
+						indicators[1].setAmount(indicators[1].getAmount()+1);
+						throw new InfectedException();
+					}else {
+						healthyPeople.get(i).setHit(false);
+					}
+				
 				}
 			}
 		}
 		
 		
 	}
-
-	public void hitCheckCollisions() {
+	
+	public void checkPercentage() throws ThirtyPercentException{
+		int total= indicators[0].getAmount()+indicators[1].getAmount()+indicators[2].getAmount();
+		int percentage= (int) ((int) total*0.3);
+		
+		if(infectedPeople.size()==percentage) {
+			throw new ThirtyPercentException();
+		}
+		
 		
 	}
+	
+	public void collisions() {
+		hitCheckCollisionsHH();
+		hitCheckCollisionsRR();
+		hitCheckCollisionsII();
+		hitCheckCollisionsIR();
+		hitCheckCollisionsHR();
+		
+	}
+
+	private void hitCheckCollisionsHH() {
+		boolean hit=false;
+		for (int i = 0; i < healthyPeople.size() && hit==false; i++) {
+			for (int j = 0; j < healthyPeople.size() && hit==false && i!=j; j++) {
+				healthyPeople.get(i).checkCollision(healthyPeople.get(j),0);
+			}
+		}
+	}
+	
+	private void hitCheckCollisionsRR() {
+		boolean hit=false;
+		for (int i = 0; i < recoveredPeople.size() && hit==false; i++) {
+			for (int j = 0; j < recoveredPeople.size() && hit==false && i!=j; j++) {
+				recoveredPeople.get(i).checkCollision(recoveredPeople.get(j),0);
+			}
+		}
+	}
+	
+	private void hitCheckCollisionsII() {
+		boolean hit=false;
+		for (int i = 0; i < infectedPeople.size() && hit==false; i++) {
+			for (int j = 0; j < infectedPeople.size() && hit==false && i!=j; j++) {
+				 infectedPeople.get(i).checkCollision( infectedPeople.get(j),0);
+			}
+		}
+	}
+	
+	private void hitCheckCollisionsIR() {
+		boolean hit=false;
+		for (int i = 0; i < infectedPeople.size() && hit==false; i++) {
+			for (int j = 0; j < recoveredPeople.size() && hit==false && i!=j; j++) {
+				 infectedPeople.get(i).checkCollision( recoveredPeople.get(j),0);
+			}
+		}
+	}
+	
+	private void hitCheckCollisionsHR() {
+		boolean hit=false;
+		for (int i = 0; i < healthyPeople.size() && hit==false; i++) {
+			for (int j = 0; j < recoveredPeople.size() && hit==false && i!=j; j++) {
+				healthyPeople.get(i).checkCollision( recoveredPeople.get(j),0);
+			}
+		}
+	}
+	
+	
 
 	public ArrayList<Healthy> getHealthyPeople() {
 		return healthyPeople;

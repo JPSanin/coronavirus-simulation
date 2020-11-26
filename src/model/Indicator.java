@@ -61,6 +61,18 @@ public class Indicator implements Comparable<Indicator>{
 	}
 
 
+	public int getAmount() {
+		return amount;
+	}
+
+
+	public void setAmount(int amount) {
+		this.amount = amount;
+	}
+	
+	
+
+
 
 
 
