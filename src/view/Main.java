@@ -9,6 +9,7 @@ import processing.core.PConstants;
 public class Main extends PApplet{
 
 	private Controller controller;
+	private boolean thrown;
 
 	public static void main(String[] args) {
 		PApplet.main(Main.class.getName());
@@ -31,6 +32,7 @@ public class Main extends PApplet{
 
 
 		controller= new Controller(healthyStart, infectedStart, recoveredStart, this);
+		thrown= false;
 	
 	}
 
@@ -62,12 +64,15 @@ public class Main extends PApplet{
 			controller.getLogic().getIndicators()[i].draw(450+(i*100));
 		}
 		
-		
-		try {
-			controller.checkPercentage();
-		} catch (ThirtyPercentException e1) {
-			System.out.println(e1.getMessage());
+		if(thrown==false) {
+			try {
+				controller.checkPercentage();
+			} catch (ThirtyPercentException e1) {
+				thrown=true;
+				System.out.println(e1.getMessage());
+			}
 		}
+		
 		controller.collisions();
 		
 		try {
