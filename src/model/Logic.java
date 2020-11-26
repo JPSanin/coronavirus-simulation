@@ -3,6 +3,7 @@ package model;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import exceptions.InfectedException;
 import processing.core.PApplet;
 
 public class Logic {
@@ -14,6 +15,9 @@ public class Logic {
 	private Indicator[] indicators;
 
 	private ColorComparator cc;
+	private PApplet app;
+	
+	
 
 	public Logic(int healthyStart, int infectedStart, int recoveredStart, PApplet app ) {
 		healthyPeople= new ArrayList<>();
@@ -38,6 +42,9 @@ public class Logic {
 		indicators[2]= new Indicator(recoveredStart, 3, app);
 		
 		cc= new ColorComparator();
+		
+		this.app=app;
+		
 
 	}
 
@@ -50,10 +57,29 @@ public class Logic {
 		Arrays.sort(indicators,cc);
 	}
 	
-	public void hitcheck() {
+	public void hitCheckInfection() throws InfectedException{
+		
+		boolean hit=false;
+		for (int i = 0; i < healthyPeople.size() && hit==false; i++) {
+			for (int j = 0; j < infectedPeople.size() && hit==false ; j++) {
+				healthyPeople.get(i).checkCollision(infectedPeople.get(j));
+				if(healthyPeople.get(i).isHit()) {
+					Infected newInfected= new Infected(healthyPeople.get(i).getLocation(),
+							healthyPeople.get(i).getVelocity(),app);
+					healthyPeople.remove(i);
+					infectedPeople.add(newInfected);
+					hit=true;
+					throw new InfectedException();
+				}
+			}
+		}
+		
 		
 	}
 
+	public void hitCheckCollisions() {
+		
+	}
 
 	public ArrayList<Healthy> getHealthyPeople() {
 		return healthyPeople;

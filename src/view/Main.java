@@ -1,6 +1,7 @@
 package view;
 
 import controller.Controller;
+import exceptions.InfectedException;
 /*
 import model.Healthy;
 import model.Infected;
@@ -70,6 +71,12 @@ public class Main extends PApplet{
 		
 		for(int i=0; i< controller.getLogic().getIndicators().length;i++) {
 			controller.getLogic().getIndicators()[i].draw(450+(i*100));
+		}
+		
+		try {
+			controller.hitCheckInfection();
+		} catch (InfectedException e) {
+			System.out.println(e.getMessage());
 		}
 		
 		fill(0);

@@ -1,5 +1,6 @@
 package controller;
 
+import exceptions.InfectedException;
 import model.Logic;
 import processing.core.PApplet;
 
@@ -20,8 +21,8 @@ public class Controller {
 		logic.sortIndicatorsColor();
 	}
 	
-	public void hitcheck() {
-		logic.hitcheck();
+	public void hitCheckInfection() throws InfectedException  {
+		logic.hitCheckInfection();
 	}
 
 	
