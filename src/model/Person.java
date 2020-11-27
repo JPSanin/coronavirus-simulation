@@ -10,7 +10,7 @@ public abstract class Person extends Thread{
 	private PVector location;
 	private PVector velocity;
 	private PApplet app;
-	private boolean hit;
+	private boolean hit, recover;
 	private float m;
 
 
@@ -19,6 +19,7 @@ public abstract class Person extends Thread{
 		velocity=	new PVector (app.random(-2, 2),app.random(-2, 2));
 		this.app=app;
 		hit=false;
+		recover=false;
 		m= (float) (SIZE*.1);
 	}
 
@@ -30,6 +31,7 @@ public abstract class Person extends Thread{
 		this.velocity = velocity;
 		this.app = app;
 		hit=false;
+		recover=false;
 		m= (float) (SIZE*.1);
 	}
 
@@ -159,15 +161,7 @@ public abstract class Person extends Thread{
 	public abstract void draw();
 
 
-	public void run() {
-		move();
-		bounce();
-		try {
-			sleep(500);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-	}
+	
 
 	public static int getSize() {
 		return SIZE;
@@ -192,6 +186,16 @@ public abstract class Person extends Thread{
 	public void setHit(boolean hit) {
 		this.hit = hit;
 	}
+
+	public boolean isRecover() {
+		return recover;
+	}
+
+	public void setRecover(boolean recover) {
+		this.recover = recover;
+	}
+
+
 
 
 	public PApplet getApp() {

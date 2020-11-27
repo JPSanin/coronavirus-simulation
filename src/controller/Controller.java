@@ -34,6 +34,10 @@ public class Controller {
 		logic.checkPercentage();
 	}
 	
+	public void recover() {
+		logic.recover();
+	}
+	
 	public int getHealthySize() {
 		return logic.getHealthyPeople().size();
 	}

@@ -12,6 +12,8 @@ public class Logic{
 	private ArrayList<Healthy> healthyPeople;
 	private ArrayList<Infected> infectedPeople;
 	private ArrayList<Recovered> recoveredPeople;
+	
+	
 
 	private Indicator[] indicators;
 
@@ -45,8 +47,6 @@ public class Logic{
 		cc= new ColorComparator();
 		
 		this.app=app;
-		
-
 	}
 
 
@@ -59,7 +59,37 @@ public class Logic{
 		Arrays.sort(indicators,cc);
 	}
 	
-	
+	public void recover() {
+		if(app.frameCount%15==0) {
+			for (int i = 0; i < infectedPeople.size(); i++) {
+				if(infectedPeople.get(i).isRecover()) {
+					infectedPeople.get(i).setRecover(false);
+					Recovered newRecovered= new Recovered(infectedPeople.get(i).getLocation(),
+							infectedPeople.get(i).getVelocity(),app);
+					infectedPeople.remove(i);
+					recoveredPeople.add(newRecovered);
+					if(indicators[0].getType()==2) {
+						indicators[0].setAmount(indicators[0].getAmount()-1);
+					}else if(indicators[1].getType()==2) {
+						indicators[1].setAmount(indicators[1].getAmount()-1);
+					}else {
+						indicators[2].setAmount(indicators[2].getAmount()-1);
+					}
+					
+					
+					if(indicators[0].getType()==3) {
+						indicators[0].setAmount(indicators[0].getAmount()+1);
+					}else if(indicators[1].getType()==3) {
+						indicators[1].setAmount(indicators[1].getAmount()+1);
+					}else {
+						indicators[2].setAmount(indicators[2].getAmount()+1);
+					}
+			
+				}
+			}
+		}
+		
+	}
 	
 	public boolean hitCheckInfection() throws InfectedException{
 		
@@ -75,8 +105,24 @@ public class Logic{
 						healthyPeople.remove(i);
 						infectedPeople.add(newInfected);
 						hit=true;
-						indicators[0].setAmount(indicators[0].getAmount()-1);
-						indicators[1].setAmount(indicators[1].getAmount()+1);
+						
+						if(indicators[0].getType()==1) {
+							indicators[0].setAmount(indicators[0].getAmount()-1);
+						}else if(indicators[1].getType()==1) {
+							indicators[1].setAmount(indicators[1].getAmount()-1);
+						}else {
+							indicators[2].setAmount(indicators[2].getAmount()-1);
+						}
+						
+						
+						if(indicators[0].getType()==2) {
+							indicators[0].setAmount(indicators[0].getAmount()+1);
+						}else if(indicators[1].getType()==2) {
+							indicators[1].setAmount(indicators[1].getAmount()+1);
+						}else {
+							indicators[2].setAmount(indicators[2].getAmount()+1);
+						}
+						
 						throw new InfectedException();
 					}else {
 						healthyPeople.get(i).setHit(false);
@@ -112,46 +158,51 @@ public class Logic{
 	}
 
 	private void hitCheckCollisionsHH() {
-		boolean hit=false;
-		for (int i = 0; i < healthyPeople.size() && hit==false; i++) {
-			for (int j = 0; j < healthyPeople.size() && hit==false && i!=j; j++) {
+
+		for (int i = 0; i < healthyPeople.size(); i++) {
+			for (int j = 0; j < healthyPeople.size() && i!=j; j++) {
 				healthyPeople.get(i).checkCollision(healthyPeople.get(j),0);
+		
 			}
 		}
 	}
 	
 	private void hitCheckCollisionsRR() {
-		boolean hit=false;
-		for (int i = 0; i < recoveredPeople.size() && hit==false; i++) {
-			for (int j = 0; j < recoveredPeople.size() && hit==false && i!=j; j++) {
+		
+		for (int i = 0; i < recoveredPeople.size() ; i++) {
+			for (int j = 0; j < recoveredPeople.size()&& i!=j; j++) {
 				recoveredPeople.get(i).checkCollision(recoveredPeople.get(j),0);
+				
 			}
 		}
 	}
 	
 	private void hitCheckCollisionsII() {
-		boolean hit=false;
-		for (int i = 0; i < infectedPeople.size() && hit==false; i++) {
-			for (int j = 0; j < infectedPeople.size() && hit==false && i!=j; j++) {
+	
+		for (int i = 0; i < infectedPeople.size() ; i++) {
+			for (int j = 0; j < infectedPeople.size() &&  i!=j; j++) {
 				 infectedPeople.get(i).checkCollision( infectedPeople.get(j),0);
+				
 			}
 		}
 	}
 	
 	private void hitCheckCollisionsIR() {
-		boolean hit=false;
-		for (int i = 0; i < infectedPeople.size() && hit==false; i++) {
-			for (int j = 0; j < recoveredPeople.size() && hit==false && i!=j; j++) {
+		
+		for (int i = 0; i < infectedPeople.size(); i++) {
+			for (int j = 0; j < recoveredPeople.size() && i!=j; j++) {
 				 infectedPeople.get(i).checkCollision( recoveredPeople.get(j),0);
+		
 			}
 		}
 	}
 	
 	private void hitCheckCollisionsHR() {
-		boolean hit=false;
-		for (int i = 0; i < healthyPeople.size() && hit==false; i++) {
-			for (int j = 0; j < recoveredPeople.size() && hit==false && i!=j; j++) {
+	
+		for (int i = 0; i < healthyPeople.size(); i++) {
+			for (int j = 0; j < recoveredPeople.size()  && i!=j; j++) {
 				healthyPeople.get(i).checkCollision( recoveredPeople.get(j),0);
+			
 			}
 		}
 	}

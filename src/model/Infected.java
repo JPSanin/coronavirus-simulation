@@ -13,6 +13,20 @@ public class Infected extends Person{
 		super(location, velocity, app);
 	}
 
+	
+	public void run() {
+		while(!super.isRecover()) {
+			move();
+			bounce();
+			try {
+				sleep(14000);
+				//System.out.println("Recupera");
+				super.setRecover(true);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}	
+	}
 
 
 	@Override

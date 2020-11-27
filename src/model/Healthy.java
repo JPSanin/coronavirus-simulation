@@ -7,6 +7,16 @@ public class Healthy extends Person{
 	public Healthy(PApplet app) {
 		super(app);
 	}
+	
+	public void run() {
+		move();
+		bounce();
+		try {
+			sleep(500);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
 
 	@Override
 	public void draw() {
